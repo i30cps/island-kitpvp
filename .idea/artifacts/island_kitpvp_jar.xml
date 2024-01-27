@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="island-kitpvp:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/island_kitpvp_jar</output-path>
+    <root id="archive" name="island-kitpvp.jar">
+      <element id="module-output" name="island-kitpvp" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/spigot-api-1.20.2-R0.1-20231205.164257-71-shaded.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

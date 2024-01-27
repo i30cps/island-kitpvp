@@ -1,0 +1,6 @@
+main: dev.rotator.Main
+name: IslandKitPvP
+version: 0.1
+commands:
+  tester:
+    description: "Testing stuff"
