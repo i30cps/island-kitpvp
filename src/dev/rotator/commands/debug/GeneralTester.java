@@ -1,5 +1,6 @@
 package dev.rotator.commands.debug;
 
+import dev.rotator.Main;
 import dev.rotator.kitlogic.KitManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -22,7 +23,7 @@ public class GeneralTester implements CommandExecutor {
         }
 
         if (strings[0].equals("basickit")) {
-
+            Main.getKitManager().assignKit(p, "basic");
         } else if (strings[0].equals("huh")) {
 
         } else {

@@ -1,17 +1,13 @@
 package dev.rotator.kitlogic;
 
-import dev.rotator.kitlogic.kits.BasicKit;
+import dev.rotator.kitlogic.kits.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class KitManager implements Listener {
     private Map<UUID, Kit> uuidKitMap;
@@ -21,29 +17,26 @@ public class KitManager implements Listener {
         this.uuidKitMap = new HashMap<>();
         this.availableKits = new HashMap<>();
 
+        this.availableKits.put("null", new NullKit());
         this.availableKits.put("basic", new BasicKit());
+        this.availableKits.put("chicken", new ChickenKit());
     }
 
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent e) {
-        cleanUp(e.getEntity());
+    private Kit unnullKit(Kit kit) {
+        if (kit == null) return availableKits.get("null");
+        return kit;
     }
 
-    public void cleanUp(UUID uuid) {
-        uuidKitMap.remove(uuid);
-    }
-    public void cleanUp(Player p) {
-        cleanUp(p.getUniqueId());
+    public boolean isNullKit(Kit kit) { return kit.isNullKit(); }
+
+    public boolean playerHasKit(Player p) { return !isNullKit(getKitOfPlayer(p)); }
+
+    public Kit getKitOfPlayer(UUID uuid) {
+        return unnullKit(uuidKitMap.get(uuid));
     }
 
-    @Nullable
-    public Kit getKit(UUID uuid) {
-        return uuidKitMap.get(uuid);
-    }
-
-    @Nullable
-    public Kit getKit(Player p) {
-        return uuidKitMap.get(p.getUniqueId());
+    public Kit getKitOfPlayer(Player p) {
+        return unnullKit(uuidKitMap.get(p.getUniqueId()));
     }
 
     public boolean isValidKit(String kitName) {
@@ -71,4 +64,18 @@ public class KitManager implements Listener {
         assignKit(p, availableKits.get(kitName));
     }
 
+    // stuff to automatically remove the kit from the player upon death.
+    // this should not need any modifications beside potential bug fixes
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent e) {
+        cleanUp(e.getEntity());
+    }
+
+    public void cleanUp(UUID uuid) {
+        uuidKitMap.remove(uuid);
+    }
+    public void cleanUp(Player p) {
+        cleanUp(p.getUniqueId());
+        Objects.requireNonNull(getKitOfPlayer(p)).cleanUp(p);
+    }
 }

@@ -1,6 +1,11 @@
 main: dev.rotator.Main
 name: IslandKitPvP
 version: 0.1
+api-version: 1.20
 commands:
   tester:
     description: "Testing stuff"
+    usage: "§cI can't tell you the usage. Go ask rotator."
+  kit:
+    description: "Get a kit!"
+    usage: "/kit <kitName>"

@@ -4,6 +4,7 @@ import dev.rotator.eventhandlers.KitEventsManager;
 import dev.rotator.kitlogic.KitManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import dev.rotator.commands.*;
 
 public class Main extends JavaPlugin {
     public static JavaPlugin pl;
@@ -24,6 +25,7 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(kitEventsManager, this);
 
         getCommand("tester").setExecutor(new dev.rotator.commands.debug.GeneralTester());
+        getCommand("kit").setExecutor(new KitCommand());
     }
 
     @Override
