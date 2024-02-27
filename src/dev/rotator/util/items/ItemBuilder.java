@@ -45,7 +45,8 @@ public class ItemBuilder {
     private Material material = Material.STONE;
     private int amount = 1;
     private MaterialData data;
-    private short damage = 0;
+    @Deprecated
+    private short damage = -1;
     private Map<Enchantment, Integer> enchantments = new HashMap<>();
     private String displayname;
     private List<String> lore = new ArrayList<>();
@@ -538,8 +539,9 @@ public class ItemBuilder {
     public ItemStack build() {
         item.setType(material);
         item.setAmount(amount);
-        item.setDurability(damage);
-        meta = item.getItemMeta();
+
+
+
         if(data != null) {
             item.setData(data);
         }
@@ -555,6 +557,7 @@ public class ItemBuilder {
                 meta.addItemFlags(f);
             }
         }
+
         item.setItemMeta(meta);
         item.addUnsafeEnchantments(enchantments);
         return item;

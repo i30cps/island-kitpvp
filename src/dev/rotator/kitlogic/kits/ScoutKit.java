@@ -6,18 +6,22 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-public class BasicKit implements Kit {
+public class ScoutKit implements Kit {
     public void apply(Player p) {
         PlayerInventory inv = p.getInventory();
-        Material[] mats = {Material.DIAMOND_HELMET, Material.IRON_CHESTPLATE,
-                Material.IRON_LEGGINGS, Material.DIAMOND_BOOTS, Material.DIAMOND_SWORD};
+        Material[] mats = {Material.IRON_HELMET, Material.IRON_CHESTPLATE,
+                Material.IRON_LEGGINGS, Material.IRON_BOOTS, Material.DIAMOND_SWORD};
 
         for (Material m : mats) {
             ItemStack is = new ItemStack(m);
             ItemUtil.setUnbreakable(is, true);
             ItemUtil.smartGive(p, is);
         }
+
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, -1, 1));
 
         inv.setItemInOffHand(new ItemStack(Material.MOSS_BLOCK, 32));
     }

@@ -10,6 +10,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -49,5 +51,20 @@ public class KitEventsManager implements Listener {
             }.runTaskLater(Main.getPl(), 200L);
         }
 
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent e) {
+        Main.getKitManager().getKitOfPlayer(e.getPlayer()).onPlayerInteract(e);
+    }
+
+    @EventHandler
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
+        Main.getKitManager().getKitOfPlayer(e.getPlayer()).onPlayerInteractEntity(e);
+    }
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent e) {
+        Main.getKitManager().getKitOfPlayer(e.getPlayer()).onBlockPlace(e);
     }
 }
