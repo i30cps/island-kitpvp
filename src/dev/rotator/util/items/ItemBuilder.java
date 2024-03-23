@@ -549,10 +549,10 @@ public class ItemBuilder {
         if(displayname != null) {
             meta.setDisplayName(displayname);
         }
-        if(lore.size() > 0) {
+        if(!lore.isEmpty()) {
             meta.setLore(lore);
         }
-        if(flags.size() > 0) {
+        if(!flags.isEmpty()) {
             for (ItemFlag f : flags) {
                 meta.addItemFlags(f);
             }
@@ -566,9 +566,10 @@ public class ItemBuilder {
     public ItemBuilder color(Color color) {
         if (item.getType() == Material.LEATHER_BOOTS || item.getType() == Material.LEATHER_CHESTPLATE || item.getType() == Material.LEATHER_HELMET
                 || item.getType() == Material.LEATHER_LEGGINGS) {
-            LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
-            meta.setColor(color);
-            item.setItemMeta(meta);
+            LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+            assert leatherArmorMeta != null;
+            leatherArmorMeta.setColor(color);
+            meta = (ItemMeta) leatherArmorMeta;
             return this;
         } else {
             throw new IllegalArgumentException("color() only applicable for leather armor!");

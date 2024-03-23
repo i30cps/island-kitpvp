@@ -28,6 +28,7 @@ public class KitManager implements Listener {
         this.availableKits.put("scout", new ScoutKit());
         this.availableKits.put("frog", new FrogKit());
         this.availableKits.put("assassin", new AssassinKit());
+        this.availableKits.put("hyperaggresive", new HyperaggressiveKit());
 
     }
 

@@ -78,7 +78,7 @@ public class AssassinKit implements Kit {
 
         // now, teleport the player
 
-        UUID closestPlayer = null;
+        UUID closestUUID = null;
         double lowestDist = -1;
 
         for (UUID uuid : Main.getKitManager().playersWithKits) {
@@ -89,19 +89,28 @@ public class AssassinKit implements Kit {
             double newDist = candidate.getLocation().distanceSquared(p.getLocation());
             if (lowestDist == -1d || newDist < lowestDist) {
                 lowestDist = newDist;
-                closestPlayer = uuid;
+                closestUUID = uuid;
             }
         }
 
-        if (closestPlayer == null) {
+        if (closestUUID == null) {
             p.sendMessage("§cThere are no other players to teleport to!");
             return;
         }
 
-        p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 1, 0, false, false));
-        p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1, 0, false, false));
+        Player closestPlayer = Bukkit.getPlayer(closestUUID);
 
-        p.teleport(Objects.requireNonNull(Bukkit.getPlayer(closestPlayer)));
+        assert closestPlayer != null;
+
+        closestPlayer.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 0, false, false));
+        closestPlayer.sendMessage("§cAn assassin used Shadowstep on you!");
+
+        p.sendMessage("§4You shadowstepped to " + closestPlayer.getDisplayName());
+
+        p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 0, false, false));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 30, 0, false, false));
+
+        p.teleport(Objects.requireNonNull(closestPlayer));
 
         PlayerInventory inv = p.getInventory();
 
