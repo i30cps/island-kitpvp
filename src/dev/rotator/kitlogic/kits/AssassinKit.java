@@ -21,7 +21,10 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Objects;
 import java.util.UUID;
 
-public class AssassinKit implements Kit {
+public class AssassinKit extends Kit {
+    @Override
+    public String getID() { return "AssassinKit"; }
+
     public void apply(Player p) {
         PlayerInventory inv = p.getInventory();
 
@@ -49,6 +52,8 @@ public class AssassinKit implements Kit {
 
     @Override
     public void onPlayerKill(Player p) {
+        Main.getPl().getPlayerdataManager().addKitExperience(p.getUniqueId(), this, this.killExperience);
+
         p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 2));
         p.getInventory().addItem(new ItemStack(Material.MOSS_BLOCK, 16));
 
@@ -81,7 +86,7 @@ public class AssassinKit implements Kit {
         UUID closestUUID = null;
         double lowestDist = -1;
 
-        for (UUID uuid : Main.getKitManager().playersWithKits) {
+        for (UUID uuid : Main.getPl().getKitManager().playersWithKits) {
             if (uuid.equals(p.getUniqueId())) continue;
 
             Player candidate = Bukkit.getPlayer(uuid);

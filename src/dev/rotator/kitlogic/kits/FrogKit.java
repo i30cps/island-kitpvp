@@ -1,5 +1,6 @@
 package dev.rotator.kitlogic.kits;
 
+import dev.rotator.Main;
 import dev.rotator.kitlogic.Kit;
 import dev.rotator.util.items.ItemBuilder;
 import dev.rotator.util.items.ItemUtil;
@@ -12,7 +13,10 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class FrogKit implements Kit {
+public class FrogKit extends Kit {
+    @Override
+    public String getID() { return "FrogKit"; }
+
     public void apply(Player p) {
         PlayerInventory inv = p.getInventory();
 
@@ -30,6 +34,8 @@ public class FrogKit implements Kit {
 
     @Override
     public void onPlayerKill(Player p) {
+        Main.getPl().getPlayerdataManager().addKitExperience(p.getUniqueId(), this, this.killExperience);
+
         p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 2));
         p.getInventory().addItem(new ItemStack(Material.MOSS_BLOCK, 16));
     }

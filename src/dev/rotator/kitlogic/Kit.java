@@ -1,5 +1,6 @@
 package dev.rotator.kitlogic;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -10,13 +11,18 @@ import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public interface Kit {
-    void apply(Player p);
-    default void cleanUp(Player p) {}
-    default void onPlayerKill(Player p) {}
-    default void onProjectileLaunch(ProjectileLaunchEvent e) {}
-    default boolean isNullKit() { return false; }
-    default void preApply(Player p) {
+public abstract class Kit {
+    protected int killExperience = 20;
+
+    private String id;
+    public abstract String getID();
+    public abstract void apply(Player p);
+
+    public void cleanUp(Player p) {}
+    public void onPlayerKill(Player p) {}
+    public void onProjectileLaunch(ProjectileLaunchEvent e) {}
+    public boolean isNullKit() { return false; }
+    public void preApply(Player p) {
         p.setGameMode(GameMode.SURVIVAL);
         p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
         // TODO: Teleport player to the map.
@@ -24,7 +30,8 @@ public interface Kit {
         p.setSaturation(20);
 
     }
-    default void onPlayerInteract(PlayerInteractEvent e) {}
-    default void onPlayerInteractEntity(PlayerInteractEntityEvent e) {}
-    default void onBlockPlace(BlockPlaceEvent e) {}
+    public void onPlayerInteract(PlayerInteractEvent e) {}
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {}
+    public void onBlockPlace(BlockPlaceEvent e) {}
+
 }

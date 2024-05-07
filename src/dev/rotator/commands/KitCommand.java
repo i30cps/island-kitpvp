@@ -16,7 +16,7 @@ public class KitCommand implements CommandExecutor {
 
         if (strings.length != 1) return false;
 
-        Main.getKitManager().assignKit(p, strings[0]);
+        Main.getPl().getKitManager().assignKit(p, strings[0]);
 
         return true;
     }

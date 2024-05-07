@@ -23,7 +23,7 @@ public class GeneralTester implements CommandExecutor {
         }
 
         if (strings[0].equals("basickit")) {
-            Main.getKitManager().assignKit(p, "basic");
+            Main.getPl().getKitManager().assignKit(p, "basic");
         } else if (strings[0].equals("huh")) {
 
         } else {

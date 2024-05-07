@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-public class ChickenKit implements Kit {
+public class ChickenKit extends Kit {
     @Override
     public void apply(Player p) {
 
@@ -39,7 +39,13 @@ public class ChickenKit implements Kit {
     }
 
     @Override
+    public String getID() { return "ChickenKit"; }
+
+
+    @Override
     public void onPlayerKill(Player p) {
+        Main.getPl().getPlayerdataManager().addKitExperience(p.getUniqueId(), this, this.killExperience);
+
         p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 2));
         p.getInventory().addItem(new ItemStack(Material.MOSS_BLOCK, 16));
         p.getInventory().addItem(new ItemBuilder(Material.EGG).displayname("§bBridge Egg").build());

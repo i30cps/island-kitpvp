@@ -25,7 +25,7 @@ public class KitEventsManager implements Listener {
         Player killer = e.getEntity().getKiller();
         Player p = e.getEntity();
         if (killer != null) {
-            Main.getKitManager().getKitOfPlayer(killer).onPlayerKill(killer);
+            Main.getPl().getKitManager().getKitOfPlayer(killer).onPlayerKill(killer);
         }
     }
 
@@ -34,13 +34,13 @@ public class KitEventsManager implements Listener {
         ProjectileSource source = e.getEntity().getShooter();
         if (!(source instanceof Player)) return;
 
-        Main.getKitManager().getKitOfPlayer((Player) source).onProjectileLaunch(e);
+        Main.getPl().getKitManager().getKitOfPlayer((Player) source).onProjectileLaunch(e);
     }
 
     @EventHandler
     public void onPlayerPlace (BlockPlaceEvent e) {
         // check if the player has a kit. if so, remove the block later.
-        if (Main.getKitManager().playerHasKit(e.getPlayer())) {
+        if (Main.getPl().getKitManager().playerHasKit(e.getPlayer())) {
             // remove the block after 10 seconds:
 
             new BukkitRunnable() {
@@ -55,16 +55,16 @@ public class KitEventsManager implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
-        Main.getKitManager().getKitOfPlayer(e.getPlayer()).onPlayerInteract(e);
+        Main.getPl().getKitManager().getKitOfPlayer(e.getPlayer()).onPlayerInteract(e);
     }
 
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
-        Main.getKitManager().getKitOfPlayer(e.getPlayer()).onPlayerInteractEntity(e);
+        Main.getPl().getKitManager().getKitOfPlayer(e.getPlayer()).onPlayerInteractEntity(e);
     }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
-        Main.getKitManager().getKitOfPlayer(e.getPlayer()).onBlockPlace(e);
+        Main.getPl().getKitManager().getKitOfPlayer(e.getPlayer()).onBlockPlace(e);
     }
 }

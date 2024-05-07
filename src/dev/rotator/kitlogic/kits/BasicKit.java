@@ -1,5 +1,6 @@
 package dev.rotator.kitlogic.kits;
 
+import dev.rotator.Main;
 import dev.rotator.kitlogic.Kit;
 import dev.rotator.util.items.ItemUtil;
 import org.bukkit.Material;
@@ -7,7 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-public class BasicKit implements Kit {
+public class BasicKit extends Kit {
+    @Override
+    public String getID() { return "BasicKit"; }
+
     public void apply(Player p) {
         PlayerInventory inv = p.getInventory();
         Material[] mats = {Material.DIAMOND_HELMET, Material.IRON_CHESTPLATE,
@@ -24,7 +28,12 @@ public class BasicKit implements Kit {
 
     @Override
     public void onPlayerKill(Player p) {
+        Main.getPl().getPlayerdataManager().addKitExperience(p.getUniqueId(), this, this.killExperience);
+
         p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 2));
         p.getInventory().addItem(new ItemStack(Material.MOSS_BLOCK, 16));
     }
+
+    @Override
+    public String toString() { return "BasicKit"; }
 }
