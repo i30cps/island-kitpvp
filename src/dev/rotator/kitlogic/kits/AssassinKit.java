@@ -3,6 +3,7 @@ package dev.rotator.kitlogic.kits;
 import dev.rotator.Main;
 import dev.rotator.kitlogic.Kit;
 import dev.rotator.util.items.ItemBuilder;
+import dev.rotator.util.items.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -17,11 +18,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 import java.util.UUID;
 
 public class AssassinKit extends Kit {
+    private boolean onShadowstepCooldown = false;
+
     @Override
     public String getID() { return "AssassinKit"; }
 
@@ -54,10 +58,12 @@ public class AssassinKit extends Kit {
     public void onPlayerKill(Player p) {
         Main.getPl().getPlayerdataManager().addKitExperience(p.getUniqueId(), this, this.killExperience);
 
-        p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 2));
-        p.getInventory().addItem(new ItemStack(Material.MOSS_BLOCK, 16));
+        ItemUtil.smartGive(p, new ItemStack(Material.GOLDEN_APPLE, 2));
+        ItemUtil.smartGive(p, new ItemStack(Material.MOSS_BLOCK, 16));
 
-        p.getInventory().addItem(new ItemBuilder(Material.WITHER_SKELETON_SKULL)
+        p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, true, false));
+
+        ItemUtil.smartGive(p, new ItemBuilder(Material.WITHER_SKELETON_SKULL)
                 .displayname("§8Shadowstep (Right-click)")
                 .lore("§7Teleports to the nearest player.").build());
 
@@ -78,6 +84,19 @@ public class AssassinKit extends Kit {
     }
 
     private void shadowStepAbility(Player p, ItemStack item) {
+        if (onShadowstepCooldown) {
+            p.sendMessage("§cYou are currently on the 1 second cooldown!");
+            return;
+        }
+        onShadowstepCooldown = true;
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                onShadowstepCooldown = false;
+            }
+        }.runTaskLater(Main.getPl(), 20L);
+
         if (item == null) return;
         if (!item.getType().equals(Material.WITHER_SKELETON_SKULL)) return;
 

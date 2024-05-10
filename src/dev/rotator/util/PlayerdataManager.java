@@ -53,6 +53,7 @@ public class PlayerdataManager {
     public void setKitExperience(UUID uuid, Kit kit, int xp) { ofKit(uuid, kit).set("xp", xp); }
     public int addKitExperience(UUID uuid, Kit kit, int xp) {
         setKitExperience(uuid, kit, getKitExperience(uuid, kit) + xp);
+        addGeneralExperience(uuid, xp);
         return getKitExperience(uuid, kit);
     }
 }

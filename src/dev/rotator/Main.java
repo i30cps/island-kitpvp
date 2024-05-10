@@ -1,5 +1,7 @@
 package dev.rotator;
 
+import dev.rotator.commands.admin.GetExperienceCommand;
+import dev.rotator.commands.admin.SetExperienceCommand;
 import dev.rotator.eventhandlers.KitEventsManager;
 import dev.rotator.kitlogic.KitManager;
 import dev.rotator.util.PlayerdataManager;
@@ -23,6 +25,8 @@ public class Main extends JavaPlugin {
     public KitManager getKitManager() { return kitManager; }
     public KitEventsManager getKitEventsManager() { return kitEventsManager; }
     public PlayerdataManager getPlayerdataManager() { return playerdataManager; }
+    public static KitManager getDefaultKitManager() { return getPl().getKitManager(); }
+    public static KitEventsManager getDefaultKitEventsManager() { return getPl().getKitEventsManager(); }
     public static PlayerdataManager getDefaultPlayerdataManager() { return getPl().getPlayerdataManager(); }
 
     @Override
@@ -39,6 +43,8 @@ public class Main extends JavaPlugin {
 
         getCommand("tester").setExecutor(new dev.rotator.commands.debug.GeneralTester());
         getCommand("kit").setExecutor(new KitCommand());
+        getCommand("setexp").setExecutor(new SetExperienceCommand());
+        getCommand("getexp").setExecutor(new GetExperienceCommand());
     }
 
     private void configureGameRules() {

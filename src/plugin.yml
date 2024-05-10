@@ -8,4 +8,10 @@ commands:
     usage: "§cI can't tell you the usage. Go ask rotator."
   kit:
     description: "Get a kit!"
-    usage: "/kit <kitName>"
+    usage: "§cUsage: /kit <kitName>"
+  setexp:
+    description: "set player's xp"
+    usage: "§cYou must be opped for this command. Please ask rotator if you're opped and it doesn't work."
+  getexp:
+    description: "get player's xp"
+    usage: "§cYou must be opped for this command. Please ask rotator if you're opped and it doesn't work."

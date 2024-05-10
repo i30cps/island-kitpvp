@@ -36,7 +36,9 @@ public class FrogKit extends Kit {
     public void onPlayerKill(Player p) {
         Main.getPl().getPlayerdataManager().addKitExperience(p.getUniqueId(), this, this.killExperience);
 
-        p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 2));
-        p.getInventory().addItem(new ItemStack(Material.MOSS_BLOCK, 16));
+        ItemUtil.smartGive(p, new ItemStack(Material.GOLDEN_APPLE, 2));
+        ItemUtil.smartGive(p, new ItemStack(Material.MOSS_BLOCK, 16));
+
+        p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, true, false));
     }
 }

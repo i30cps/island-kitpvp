@@ -10,6 +10,14 @@ public class ItemUtil {
     public static void smartGive(Player p, ItemStack itemStack) {
         Material m = itemStack.getType();
         PlayerInventory inv = p.getInventory();
+
+        if (itemStack.getType().equals(inv.getItemInOffHand().getType())
+            && itemStack.getAmount() + inv.getItemInOffHand().getAmount() <= 64) {
+            inv.getItemInOffHand().setAmount(inv.getItemInOffHand().getAmount() + itemStack.getAmount());
+            return;
+        }
+
+
         if (m.toString().toLowerCase().contains("boots")) {
             inv.setBoots(itemStack);
             return;

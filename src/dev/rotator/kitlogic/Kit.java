@@ -10,6 +10,7 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.PotionEffect;
 
 public abstract class Kit {
     protected int killExperience = 20;
@@ -28,7 +29,8 @@ public abstract class Kit {
         // TODO: Teleport player to the map.
         p.getInventory().clear();
         p.setSaturation(20);
-
+        for (PotionEffect effect : p.getActivePotionEffects())
+            p.removePotionEffect(effect.getType());
     }
     public void onPlayerInteract(PlayerInteractEvent e) {}
     public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {}

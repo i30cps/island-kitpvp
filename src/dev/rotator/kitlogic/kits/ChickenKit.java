@@ -3,6 +3,7 @@ package dev.rotator.kitlogic.kits;
 import dev.rotator.Main;
 import dev.rotator.kitlogic.Kit;
 import dev.rotator.util.items.ItemBuilder;
+import dev.rotator.util.items.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -16,6 +17,8 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -46,9 +49,11 @@ public class ChickenKit extends Kit {
     public void onPlayerKill(Player p) {
         Main.getPl().getPlayerdataManager().addKitExperience(p.getUniqueId(), this, this.killExperience);
 
-        p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 2));
-        p.getInventory().addItem(new ItemStack(Material.MOSS_BLOCK, 16));
-        p.getInventory().addItem(new ItemBuilder(Material.EGG).displayname("§bBridge Egg").build());
+        ItemUtil.smartGive(p, new ItemStack(Material.GOLDEN_APPLE, 2));
+        ItemUtil.smartGive(p, new ItemStack(Material.MOSS_BLOCK, 16));
+        ItemUtil.smartGive(p, new ItemBuilder(Material.EGG).displayname("§bBridge Egg").build());
+
+        p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, true, false));
     }
 
     @Override
